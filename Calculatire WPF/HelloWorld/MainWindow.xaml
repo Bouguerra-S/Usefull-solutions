@@ -1,0 +1,64 @@
+﻿<!--
+    <Window x:Class="HelloWorld.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HelloWorld"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        
+    </Grid>
+</Window>
+-->
+<Window x:Class="HelloWorld.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HelloWorld"
+        mc:Ignorable="d"
+        Title="Calculatrice" HorizontalAlignment="Center" Height="600" Width="400" VerticalAlignment="Center"
+        ResizeMode="NoResize"
+        >
+    <!-- Buttons arranged vertically inside a StackPanel. -->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Column="0" Name="buttonCA" Click="buttonCA_Click">CA</Button>
+        <Button Grid.Column="1" Name="buttonCL" Click="buttonCL_Click">CL</Button>
+        <Button Grid.Column="2" Name="buttonInverseSign" Click="buttonInverseSign_Click">-/+</Button>
+        <!--Button Grid.Column="3">=</>-->
+        <Button  Grid.Row="1" Grid.Column="0" Name="button1" Click="button1_Click">1</Button>
+        <Button  Grid.Row="1" Grid.Column="1" Name="button2" Click="button2_Click">2</Button>
+        <Button  Grid.Row="1" Grid.Column="2" Name="button3" Click="button3_Click">3</Button>
+        <Button  Grid.Row="1" Grid.Column="3" Name="buttonplus" Click="buttonplus_Click">+</Button>
+        <Button  Grid.Row="2" Grid.Column="0" Name="button4" Click="button4_Click">4</Button>
+        <Button  Grid.Row="2" Grid.Column="1" Name="button5" Click="button5_Click">5</Button>
+        <Button  Grid.Row="2" Grid.Column="2" Name="button6" Click="button6_Click">6</Button>
+        <Button  Grid.Row="2" Grid.Column="3" Name="buttonmines" Click="buttonmines_Click">-</Button>
+        <Button  Grid.Row="3" Grid.Column="0" Name="button7" Click="button7_Click">7</Button>
+        <Button  Grid.Row="3" Grid.Column="1" Name="button8" Click="button8_Click">8</Button>
+        <Button  Grid.Row="3" Grid.Column="2" Name="button9" Click="button9_Click">9</Button>
+        <Button  Grid.Row="3" Grid.Column="3" Name="buttonX" Click="buttonX_Click">X</Button>
+        <Button  Grid.Row="4" Grid.Column="0" Name="buttondot" Click="buttondot_Click">.</Button>
+        <Button  Grid.Row="4" Grid.Column="1" Name="button0" Click="button0_Click">0</Button>
+        <Button  Grid.Row="4" Grid.Column="2" Name="buttondevisison" Click="buttondevisison_Click">/</Button>
+        <Button  Grid.Row="4" Grid.Column="3" Name="buttonEquals" Click="equals_button_clic">=</Button>
+
+        <TextBlock TextWrapping="Wrap" TextTrimming="CharacterEllipsis"  Name="resultTextBox" Grid.Row="5" Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="4" Margin="0,28,18,56" >LAST INPUT</TextBlock>
+    </Grid>
+</Window>
