@@ -1,0 +1,22 @@
+﻿<Window x:Class="resumeadaptorWPF.Views.deleteLine"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:resumeadaptorWPF.Views"
+        mc:Ignorable="d"
+        Title="deleteLine" Height="100" Width="200">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button Name="deletelinebutton"  Command="{Binding Path = DeleteCommand }" Click="deletelinebutton_Click">Delete Line</Button>
+        <ComboBox Grid.Row="1" Name="subsectionCombo" SelectionChanged="subsectionCombo_SelectionChanged"></ComboBox>
+        <ComboBox Grid.Row="1" Grid.Column="1" Name="lineCombo" SelectionChanged="lineCombo_SelectionChanged"></ComboBox>
+    </Grid>
+</Window>

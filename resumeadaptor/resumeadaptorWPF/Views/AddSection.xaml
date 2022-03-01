@@ -1,0 +1,23 @@
+﻿<Window x:Class="resumeadaptorWPF.Views.AddSectionView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:resumeadaptorWPF.Views" 
+        xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+        mc:Ignorable="d"
+        Title="AddSection" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="9*"/>
+            
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBox Name="SectionName" Grid.RowSpan="2" Text="{Binding Path=NewSection.Text,Mode=TwoWay}"></TextBox>
+        <Button Grid.Column="1" Name="InsertSectionButton" Click="InsertSectionButton_Click" Command="{Binding Path = AddSectionCommand }" >Insert Section</Button>
+    </Grid>
+</Window>
