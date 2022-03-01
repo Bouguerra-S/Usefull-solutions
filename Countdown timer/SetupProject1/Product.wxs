@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"><?define CountDownTimer_TargetDir=$(var.CountDownTimer.TargetDir)?>
+	<Product Id="AEB1E248-E7C3-4695-A2A2-D947B23E9E08" Name="CountDownTimer" Language="1033" Version="1.0.0.0" Manufacturer="ISCALI" UpgradeCode="30364188-7d77-4eb1-a32f-80f498f442f2">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <Icon Id="watch.jpg" SourceFile="$(var.ProjectDir)watch.jpg"/>
+    <Property Id="ARPPRODUCTION" Value="watch.jpg"/>
+    <UIRef Id="WixUI_Minimal"/>
+    
+		<MajorUpgrade DowngradeErrorMessage="A newer version of CountDownTimer is already installed." />
+		<MediaTemplate EmbedCab="yes"/>
+
+		<Feature Id="ProductFeature" Title="CountDownTimer" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+      <ComponentRef Id="ApplicationShortcut"/>
+      <ComponentRef Id="ApplicationShortcutDesktop"/>
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="CountDownTimer" />
+			</Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="CountDownTimer"/>
+      </Directory>
+      <Directory Id="DesktopFolder" Name="Desktop"/>
+		</Directory>
+	</Fragment>
+  <Fragment>
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="978CD152-236F-4D27-8CED-DF5D362E41C2">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="CountDownTimer"
+                  Description="My Application Description"
+                  Target="[#CountDownTimer.exe]"
+                  WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+        <RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\MyCompany\MyApplicationName" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="ApplicationShortcutDesktop" Guid="8EA6A81B-FFE5-4491-9F90-E4B9E740744C">
+        <Shortcut Id="ApplicationDesktopShortcut"
+                  Name="CountDownTimer"
+                  Description="My Application Description"
+                  Target="[#CountDownTimer.exe]"
+                  WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+        <RemoveFolder Id="CleanUpDesktopShortCut" Directory="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\MyCompany\MyApplicationName" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			<!-- <Component Id="ProductComponent"> -->
+				<!-- TODO: Insert files, registry keys, and other resources here. -->
+			<!-- </Component> -->
+			<Component Id="CountDownTimer.exe" Guid="6af9bc8b-ab0a-4a00-8892-6ef9c7839c2f">
+			  <File Id="CountDownTimer.exe" Name="CountDownTimer.exe" Source="$(var.CountDownTimer_TargetDir)CountDownTimer.exe" />
+			</Component>
+			<Component Id="CountDownTimer.exe.config" Guid="ee180df5-2c97-49ca-97f2-be6bb3887f5e">
+			  <File Id="CountDownTimer.exe.config" Name="CountDownTimer.exe.config" Source="$(var.CountDownTimer_TargetDir)CountDownTimer.exe.config" />
+			</Component>
+			<Component Id="MahApps.Metro.dll" Guid="be251eb4-479d-4ce8-9a65-daec46cd3904">
+			  <File Id="MahApps.Metro.dll" Name="MahApps.Metro.dll" Source="$(var.CountDownTimer_TargetDir)MahApps.Metro.dll" />
+			</Component>
+			<Component Id="ControlzEx.dll" Guid="965aecba-6e33-4abd-acd5-3cc74d8cf65f">
+			  <File Id="ControlzEx.dll" Name="ControlzEx.dll" Source="$(var.CountDownTimer_TargetDir)ControlzEx.dll" />
+			</Component>
+			<Component Id="Microsoft.Xaml.Behaviors.dll" Guid="475aed47-5cf8-442c-a37f-265465b85acf">
+			  <File Id="Microsoft.Xaml.Behaviors.dll" Name="Microsoft.Xaml.Behaviors.dll" Source="$(var.CountDownTimer_TargetDir)Microsoft.Xaml.Behaviors.dll" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>
