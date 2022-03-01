@@ -1,0 +1,25 @@
+﻿@model resumeadaptorv2.Models.UserProfile
+
+<h1>Login</h1>
+<form method="post" asp-area="" asp-controller="Home" asp-action="RedirectLogin">
+    <input asp-for="email" type="email" /><br />
+    <input type="password" asp-for="Password" id="login_pass" />
+    <br />
+    <button>Submit</button>
+</form>
+<hr />
+<h1>Create an account</h1>
+<form method="post" asp-area="" asp-controller="Home" asp-action="RedirectLogin">
+    <input asp-for="UserName" /><br />
+    <input asp-for="Password" /><br />
+    <button>Submit</button>
+</form>
+test
+@using (Html.BeginForm("RedirectLogin", "Home", FormMethod.Post))
+{
+@Html.TextBoxFor(m => m.email)
+<br />
+@Html.TextBoxFor(m => m.Password)
+<br />
+<button>Submit</button>
+}
