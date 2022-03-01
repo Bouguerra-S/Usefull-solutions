@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1AE30087-CDDF-45CF-AA95-0E10B4A95C11}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Paint_Program</RootNamespace>
+    <AssemblyName>Paint Program</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Google.Apis">
+      <HintPath>..\packages\Google.Apis.1.22.0\lib\net45\Google.Apis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Auth">
+      <HintPath>..\packages\Google.Apis.Auth.1.22.0\lib\net45\Google.Apis.Auth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.PlatformServices">
+      <HintPath>..\packages\Google.Apis.Auth.1.22.0\lib\net45\Google.Apis.Auth.PlatformServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Core">
+      <HintPath>..\packages\Google.Apis.Core.1.22.0\lib\net45\Google.Apis.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Drive.v3">
+      <HintPath>..\packages\Google.Apis.Drive.v3.1.22.0.803\lib\net45\Google.Apis.Drive.v3.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices">
+      <HintPath>..\packages\Google.Apis.1.22.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Windows.Presentation" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="Zlib.Portable">
+      <HintPath>..\packages\Zlib.Portable.Signed.1.11.0\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch+MonoAndroid\Zlib.Portable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GifEncoder.cs" />
+    <Compile Include="BrushSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BrushSettings.Designer.cs">
+      <DependentUpon>BrushSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Canvas.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Canvas.Designer.cs">
+      <DependentUpon>Canvas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GDriveSaveDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GDriveSaveDialog.Designer.cs">
+      <DependentUpon>GDriveSaveDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GoogleDriveUpload.cs" />
+    <Compile Include="GreenScreenTool.cs" />
+    <Compile Include="ColorSamplingTool.cs" />
+    <Compile Include="DebugTool.cs" />
+    <Compile Include="Display.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ErasoirTool.cs" />
+    <Compile Include="FileSave.cs" />
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImageImport.cs" />
+    <Compile Include="ITextUpdate.cs" />
+    <Compile Include="ITool.cs" />
+    <Compile Include="Languages\de-DE.Designer.cs">
+      <DependentUpon>de-DE.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Languages\en-UK.Designer.cs">
+      <DependentUpon>en-UK.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Languages\es-ES.Designer.cs">
+      <DependentUpon>es-ES.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Languages\en-US.Designer.cs">
+      <DependentUpon>en-US.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Languages\fr-FR.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>fr-FR.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Layer.cs" />
+    <Compile Include="LayerItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LayerItem.Designer.cs">
+      <DependentUpon>LayerItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LayerManager.cs" />
+    <Compile Include="LayerView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LayerView.Designer.cs">
+      <DependentUpon>LayerView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MoveTool.cs" />
+    <Compile Include="NewProjectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewProjectForm.Designer.cs">
+      <DependentUpon>NewProjectForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BrushTool.cs" />
+    <Compile Include="PaintBucketTool.cs" />
+    <Compile Include="PencilTool.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="ProjectLoad.cs" />
+    <Compile Include="ProjectSave.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaveToDrive.cs" />
+    <Compile Include="SelectionTool.cs" />
+    <Compile Include="SharedSettings.cs" />
+    <Compile Include="StraightLineTool.cs" />
+    <Compile Include="TabletInfo.cs" />
+    <Compile Include="TextSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TextSelect.Designer.cs">
+      <DependentUpon>TextSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TextTool.cs" />
+    <Compile Include="ZoomControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ZoomControl.Designer.cs">
+      <DependentUpon>ZoomControl.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="BrushSettings.resx">
+      <DependentUpon>BrushSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Canvas.resx">
+      <DependentUpon>Canvas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GDriveSaveDialog.resx">
+      <DependentUpon>GDriveSaveDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Languages\de-DE.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>de-DE.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Languages\en-UK.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>en-UK.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Languages\es-ES.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>es-ES.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Languages\en-US.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>en-US.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Languages\fr-FR.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>fr-FR.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LayerItem.resx">
+      <DependentUpon>LayerItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LayerView.resx">
+      <DependentUpon>LayerView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewProjectForm.resx">
+      <DependentUpon>NewProjectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="TextSelect.resx">
+      <DependentUpon>TextSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZoomControl.resx">
+      <DependentUpon>ZoomControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="client_secret.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WintabDN\WintabDN.csproj">
+      <Project>{73eae30a-60b9-43a5-ad81-9b05873e405c}</Project>
+      <Name>WintabDN</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\GreyTileing.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\import.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Export.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

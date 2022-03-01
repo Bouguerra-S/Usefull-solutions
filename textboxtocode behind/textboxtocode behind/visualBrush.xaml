@@ -1,0 +1,16 @@
+﻿<Window x:Class="textboxtocode_behind.visualBrush" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        Title="VisualBrush in WPF" 
+        Height="400" 
+        Width="400">
+    <Grid>
+        <Border BorderBrush="Gray" BorderThickness="4" 
+        Height="108" Width="64">
+        <StackPanel>
+            <Rectangle Fill="Yellow"/>
+            <Rectangle Fill="Green"/>
+        </StackPanel>
+    </Border>
+    </Grid>
+</Window> 
