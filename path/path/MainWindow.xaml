@@ -1,0 +1,23 @@
+﻿<Window x:Class="path.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:path"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Path Stroke="Black" Fill="Gray"
+      Data="M 10,100 C 10,300 300,-200 300,100" Grid.Column="0"/>
+        <Path Stroke="Black" Fill="Gray" Grid.Column="1">
+            <Path.Data>
+                <PathGeometry Figures="M 10,100 C 10,300 300,-200 300,100" />
+            </Path.Data>
+        </Path>
+    </Grid>
+    
+</Window>
