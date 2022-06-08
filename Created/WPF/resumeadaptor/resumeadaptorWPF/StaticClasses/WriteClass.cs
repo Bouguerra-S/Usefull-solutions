@@ -11,7 +11,7 @@ namespace resumeadaptorWPF.StaticClasses
     {
         public  async Task WriteString(string mystring)
         {
-            await File.WriteAllTextAsync("myCV.txt", mystring);
+            await File.WriteAllTextAsync(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\myCV.txt", mystring);
         }
 
     }

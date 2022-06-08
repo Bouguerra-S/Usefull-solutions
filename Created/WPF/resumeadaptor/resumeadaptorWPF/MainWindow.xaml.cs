@@ -156,7 +156,12 @@ namespace resumeadaptorWPF
 
         private void loadbutton_Click(object sender, RoutedEventArgs e)
         {
-            string[] cvlines = System.IO.File.ReadAllLines(@"C:\Users\PCSBO2\source\repos\Bouguerra-S\resumeadaptor.com\resumeadaptorWPF\bin\Debug\net5.0-windows\myCV.txt");
+            if (!System.IO.File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.Desktop)+ "\\myCV.txt"))
+            {
+                MessageBox.Show("no file found in desktop");
+                return;
+            }
+            string[] cvlines = System.IO.File.ReadAllLines(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\myCV.txt");
 
             //re init app cv
             int sectionsnumber = App.myCv.Sections.Count();
