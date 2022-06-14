@@ -11,7 +11,7 @@ namespace findMyInputs
             myFinder.find();
             myFinder = new finderbytext("Win32_PointingDevice");
             myFinder.find();
-            myFinder = new finderbytext("Win32_PointingDevice");
+            myFinder = new finderbytext("Win32_CDROMDrive");
             myFinder.find();
 
             //todo: cameras microphones scanners
