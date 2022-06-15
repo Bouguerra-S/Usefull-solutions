@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32519.111
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rememberTriggers", "rememberTriggers\rememberTriggers.csproj", "{2ABF28C2-C36F-405C-A087-834A47CFD6A5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "myTriggers", "myTriggers\myTriggers.csproj", "{B37817D9-A9C2-467C-842D-DAD8B9640088}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2ABF28C2-C36F-405C-A087-834A47CFD6A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2ABF28C2-C36F-405C-A087-834A47CFD6A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2ABF28C2-C36F-405C-A087-834A47CFD6A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2ABF28C2-C36F-405C-A087-834A47CFD6A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B37817D9-A9C2-467C-842D-DAD8B9640088}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B37817D9-A9C2-467C-842D-DAD8B9640088}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B37817D9-A9C2-467C-842D-DAD8B9640088}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B37817D9-A9C2-467C-842D-DAD8B9640088}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
