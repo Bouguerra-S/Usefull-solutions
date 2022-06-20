@@ -4,7 +4,14 @@ string reply = Console.ReadLine();
 switch (reply)
 {
     case "yes":
-
-    default:
+        Console.WriteLine("let's verify! enter your triggers correctly one by one");
         break;
+    default:
+        System.Environment.Exit(0);
+        break;
+//read and construct list of goals
+
+//read next line
+
+        //if equals do the same else exit
 }
