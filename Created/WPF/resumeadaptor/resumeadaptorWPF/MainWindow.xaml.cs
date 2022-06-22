@@ -18,6 +18,8 @@ using resumeadaptorWPF.Views;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using resumeadaptorWPF.StaticClasses;
+using Microsoft.Win32;
+using System.IO;
 
 namespace resumeadaptorWPF
 {
@@ -156,12 +158,34 @@ namespace resumeadaptorWPF
 
         private void loadbutton_Click(object sender, RoutedEventArgs e)
         {
-            if (!System.IO.File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.Desktop)+ "\\myCV.txt"))
+            var fileContent = string.Empty;
+            var filePath = string.Empty;
+
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 2;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    //Get the path of specified file
+                    filePath = openFileDialog.FileName;
+
+                    //Read the contents of the file into a stream
+                    var fileStream = openFileDialog.OpenFile();
+
+                    using (StreamReader reader = new StreamReader(fileStream))
+                    {
+                        fileContent = reader.ReadToEnd();
+                    }
+                }
+            else
             {
-                MessageBox.Show("no file found in desktop");
                 return;
             }
-            string[] cvlines = System.IO.File.ReadAllLines(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\myCV.txt");
+            
+            string[] cvlines = System.IO.File.ReadAllLines(filePath);
 
             //re init app cv
             int sectionsnumber = App.myCv.Sections.Count();
