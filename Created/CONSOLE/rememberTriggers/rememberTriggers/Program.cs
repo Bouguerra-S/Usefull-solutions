@@ -9,9 +9,10 @@ switch (reply)
     default:
         System.Environment.Exit(0);
         break;
-//read and construct list of goals
-
-//read next line
+        //read and construct list of goals
+        System.Windows.Forms.OpenFileDialog openFileDialog1 = new OpenFileDialog();
+        openFileDialog1.ShowDialog();
+        //read next line
 
         //if equals do the same else exit
 }
