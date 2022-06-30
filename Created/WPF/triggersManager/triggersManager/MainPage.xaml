@@ -9,6 +9,11 @@
       Title="MainPage">
 
     <Grid>
-        <TextBlock>HELLO PAGE</TextBlock>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button Click="Button_Click">Manage triggers</Button>
+        <Button Click="Button_Click_1" Grid.Column="1">TRIGGER IS HERE</Button>
     </Grid>
 </Page>

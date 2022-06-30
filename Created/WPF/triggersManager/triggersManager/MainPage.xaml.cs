@@ -24,5 +24,17 @@ namespace triggersManager
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Uri uri = new Uri("ManageTriggers.xaml", UriKind.Relative); 
+            this.NavigationService.Navigate(uri);
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Uri uri = new Uri("TriggerIsHere.xaml", UriKind.Relative);
+            this.NavigationService.Navigate(uri);
+        }
     }
 }
