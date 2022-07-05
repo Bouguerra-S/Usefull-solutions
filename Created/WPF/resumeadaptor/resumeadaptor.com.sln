@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "resumeadaptorv2", "resumead
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "resumeadaptorWPF", "resumeadaptorWPF\resumeadaptorWPF.csproj", "{96A7D413-3049-4396-B15A-F12938BBE7D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{707B0467-3C35-4620-9D4C-843D3BFFD09D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "resumeadaptorWPFTests", "resumeadaptorWPFTests\resumeadaptorWPFTests.csproj", "{03CDE705-E6B9-4436-967D-B412388491C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{96A7D413-3049-4396-B15A-F12938BBE7D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96A7D413-3049-4396-B15A-F12938BBE7D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96A7D413-3049-4396-B15A-F12938BBE7D3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{707B0467-3C35-4620-9D4C-843D3BFFD09D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{707B0467-3C35-4620-9D4C-843D3BFFD09D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{707B0467-3C35-4620-9D4C-843D3BFFD09D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{707B0467-3C35-4620-9D4C-843D3BFFD09D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03CDE705-E6B9-4436-967D-B412388491C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03CDE705-E6B9-4436-967D-B412388491C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03CDE705-E6B9-4436-967D-B412388491C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03CDE705-E6B9-4436-967D-B412388491C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
