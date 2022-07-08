@@ -162,29 +162,29 @@ namespace resumeadaptorWPF
             var filePath = string.Empty;
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.InitialDirectory = "c:\\";
-                openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-                openFileDialog.FilterIndex = 2;
-                openFileDialog.RestoreDirectory = true;
+            openFileDialog.InitialDirectory = "c:\\";
+            openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 2;
+            openFileDialog.RestoreDirectory = true;
 
-                if (openFileDialog.ShowDialog() == true)
+            if (openFileDialog.ShowDialog() == true)
+            {
+                //Get the path of specified file
+                filePath = openFileDialog.FileName;
+
+                //Read the contents of the file into a stream
+                var fileStream = openFileDialog.OpenFile();
+
+                using (StreamReader reader = new StreamReader(fileStream))
                 {
-                    //Get the path of specified file
-                    filePath = openFileDialog.FileName;
-
-                    //Read the contents of the file into a stream
-                    var fileStream = openFileDialog.OpenFile();
-
-                    using (StreamReader reader = new StreamReader(fileStream))
-                    {
-                        fileContent = reader.ReadToEnd();
-                    }
+                    fileContent = reader.ReadToEnd();
                 }
+            }
             else
             {
                 return;
             }
-            
+
             string[] cvlines = System.IO.File.ReadAllLines(filePath);
 
             //re init app cv
@@ -196,29 +196,35 @@ namespace resumeadaptorWPF
             int currentsectionId = -1;
             int currentsubid = -1;
             int lineid = -1;
+            section thissection = new section();
+            subSection thissub = new subSection();
+            line thisline = new line();
             foreach (string cvline in cvlines)
             {
                 int positionofspace = cvline.IndexOf(" ");
                 string typeofinput = cvline.Substring(0, positionofspace);
-                string Text = cvline.Substring(positionofspace+1);
+                string Text = cvline.Substring(positionofspace + 1);
                 
                 switch (typeofinput)
                 {
                     case "section":
                         //update current section
                         currentsectionId = currentsectionId + 1;
-                        currentsubid = -1;
-                        lineid = -1;
-                        App.myCv.Sections.Add(new section(currentsectionId, 0, Text));
+                        //currentsubid += 1;
+                        //lineid +=1;
+                        thissection = new section(currentsectionId, 0, Text);
+                        App.myCv.Sections.Add(thissection);
                         break;
                     case "sub":
                         currentsubid = currentsubid + 1;
-                        lineid = -1;
-                        App.myCv.Sections[currentsectionId].SubSections.Add(new subSection(currentsubid, 0, Text, currentsectionId));
+                        //lineid = -1;
+                        thissub = new subSection(currentsubid, 0, Text, currentsectionId);
+                        thissection.SubSections.Add(thissub);
                         break;
                     case "line":
                         lineid = lineid + 1;
-                        App.myCv.Sections[currentsectionId].SubSections[currentsubid].Lines.Add(new line(lineid, 0, Text, currentsubid));
+                        thisline = new line(lineid, 0, Text, currentsubid);
+                        thissub.Lines.Add(thisline);
                         break;
                     default:
                         break;
@@ -265,5 +271,72 @@ namespace resumeadaptorWPF
             }
 
         }
+
+        private void newjobbutton_Click(object sender, RoutedEventArgs e)
+        {
+            var fileContent = string.Empty;
+            var filePath = string.Empty;
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                //Get the path of specified file
+                filePath = openFileDialog.FileName;
+
+                //Read the contents of the file into a stream
+                var fileStream = openFileDialog.OpenFile();
+
+                using (StreamReader reader = new StreamReader(fileStream))
+                {
+                    fileContent = reader.ReadToEnd();
+                }
+            }
+            else
+            {
+                return;
+            }
+
+            string[] joblines = System.IO.File.ReadAllLines(filePath);
+            List<string> jobwords = new List<string>();
+            foreach (string jobline in joblines)
+            {
+
+                if (string.IsNullOrEmpty(jobline))
+                {
+                    continue;
+                }
+                else
+                {
+                    string[] wordsarray = jobline.Split(' ', '.', ',', ':', ';', '(', ')', '\'', '’', '/');
+                    foreach (string word in wordsarray)
+                    {
+                        if (!string.IsNullOrEmpty(word) && word.Length > 2)
+                        {
+                            if (!jobwords.Contains(word))
+                            {
+                                jobwords.Add(word.ToLower());
+                            }
+                        }
+                    }
+                }
+            }
+            string v_dbg = "bdg";
+            jobwords.Sort();
+            traitement trt = new traitement();
+            jobwords=trt.uniquejobwords(jobwords);
+
+            List<section> usefullSections = trt.usefullSections(jobwords, App.myCv);
+            List<subSection> usefulleSubsections = trt.usefullSubsections(jobwords, App.myCv);
+            List<line> usefullLines = trt.usefullLines(jobwords, App.myCv);
+
+            //imaginons i have all the usefulle lines, subs, section
+            // i have to contract a cv
+            cv shortcv = trt.buildcv(usefullSections, usefulleSubsections, usefullLines, App.myCv);
+
+            //export to pdf
+
+            trt.printcv(shortcv);
+        }
     }
 }
+    
+

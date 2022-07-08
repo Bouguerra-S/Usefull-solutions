@@ -31,6 +31,7 @@
         <Button Grid.Column="5">New job</Button>
         <Button Name="loadbutton" Grid.Row="1" Click="loadbutton_Click">Load CV</Button>
         <Button Name="savebutton" Grid.Row="1" Grid.Column="1" Click="savebutton_Click">Save CV</Button>
+        <Button Name="newjobbutton" Grid.Row="1" Grid.Column="2" Click="newjobbutton_Click">New job</Button>
         <ListView Margin="10" Name="lvDataBinding" Grid.Row="2" SelectionChanged="choiceCombo_SelectionChanged" Grid.ColumnSpan="6"></ListView>
     </Grid>
 </metro:MetroWindow>
