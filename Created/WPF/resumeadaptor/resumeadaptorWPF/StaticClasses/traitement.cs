@@ -1,6 +1,7 @@
 ﻿using resumeadaptorWPF.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Linq;
@@ -187,8 +188,8 @@ namespace resumeadaptorWPF.StaticClasses
 
         internal void printcv(cv pcvtoprint)
         {
-            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string file = "CreatedByCSharp.pdf";
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string file = "cv adapte auto.pdf";
 
             PrintDocument pDoc = new PrintDocument()
             {
@@ -202,6 +203,9 @@ namespace resumeadaptorWPF.StaticClasses
             cvtoprint = pcvtoprint;
             pDoc.PrintPage += new PrintPageEventHandler(Print_Page);
             pDoc.Print();
+            ProcessStartInfo startInfo = new ProcessStartInfo(System.IO.Path.Combine(directory, file));
+            startInfo.UseShellExecute = true;
+            Process.Start(startInfo);
         }
 
         void Print_Page(object sender, PrintPageEventArgs e)
@@ -209,16 +213,27 @@ namespace resumeadaptorWPF.StaticClasses
             // Here you can play with the font style 
             // (and much much more, this is just an ultra-basic example)
             Font fnt = new Font("Courier New", 12);
-
+            Font fntSection = new Font("Courier New", 12, FontStyle.Bold);
+            Font fntsub = new Font("Courier New", 12, FontStyle.Bold);
             // Insert the desired text into the PDF file
             string textToPrint = "";
+            float lasty = 0;
             foreach (section section in cvtoprint.Sections)
             {
-                textToPrint += section.ToString();
+                e.Graphics.DrawString (section.Text, fntSection, System.Drawing.Brushes.Red, 0, lasty);
+                lasty = lasty + 20;
+                foreach (subSection sub in section.SubSections)
+                {
+                    e.Graphics.DrawString (sub.Text, fntsub, System.Drawing.Brushes.Black, 0, lasty);
+                    lasty = lasty + 20;
+                    foreach (line line in sub.Lines)
+                    {
+                        e.Graphics.DrawString (line.Text, fnt, System.Drawing.Brushes.Black, 0, lasty);
+                        lasty = lasty + 20;
+                    }
+                }
             }
-            e.Graphics.DrawString
-              (textToPrint, fnt, System.Drawing.Brushes.Black, 0, 0);
-
+            
         }
     }
 }

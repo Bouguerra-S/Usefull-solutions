@@ -274,6 +274,10 @@ namespace resumeadaptorWPF
 
         private void newjobbutton_Click(object sender, RoutedEventArgs e)
         {
+            if (App.myCv.Sections.Count()==0)
+            {
+                return;
+            }
             var fileContent = string.Empty;
             var filePath = string.Empty;
             OpenFileDialog openFileDialog = new OpenFileDialog();

@@ -27,8 +27,7 @@
             <Button Name="deletebutton" Click="deletebutton_Click" Grid.Column="1" IsEnabled="False">Delete</Button>
             <Button Name="updatebutton" Grid.Column="2" IsEnabled="False">Update</Button>
             <Button Name="reorderbutton" Grid.Column="3" IsEnabled="False" Click="reorderbutton_Click">Reorder</Button>
-            <ComboBox Grid.Column="4" Name="choiceCombo" FontWeight="Bold" SelectionChanged="choiceCombo_SelectionChanged" ></ComboBox>
-        <Button Grid.Column="5">New job</Button>
+        <ComboBox Grid.Column="4" Name="choiceCombo" FontWeight="Bold" SelectionChanged="choiceCombo_SelectionChanged" ></ComboBox>
         <Button Name="loadbutton" Grid.Row="1" Click="loadbutton_Click">Load CV</Button>
         <Button Name="savebutton" Grid.Row="1" Grid.Column="1" Click="savebutton_Click">Save CV</Button>
         <Button Name="newjobbutton" Grid.Row="1" Grid.Column="2" Click="newjobbutton_Click">New job</Button>
