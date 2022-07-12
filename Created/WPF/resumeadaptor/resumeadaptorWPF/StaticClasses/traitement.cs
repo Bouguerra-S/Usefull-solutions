@@ -1,6 +1,7 @@
 ﻿using resumeadaptorWPF.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
@@ -9,12 +10,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
 using System.Windows.Shapes;
+using resumeadaptorWPF.Classes;
+using Microsoft.Win32;
+using System.IO;
 
 namespace resumeadaptorWPF.StaticClasses
 {
     public class traitement
     {
         private cv cvtoprint;
+        private List<string> myJobWords;
         public traitement()
         {
 
@@ -74,7 +79,7 @@ namespace resumeadaptorWPF.StaticClasses
             {
                 foreach (string word in jobwords)
                 {
-                    if (subsection.Text.Contains(word))
+                    if (subsection.Text.Contains(word)&&!result.Any(x=> x.Id==subsection.Id))
                     {
                         result.Add(subsection);
                         break;
@@ -151,16 +156,16 @@ namespace resumeadaptorWPF.StaticClasses
                 result.Sections.Add(section);
             }
             
-            foreach (subSection subSection in usefulleSubsections)
+            /*foreach (subSection uss in usefulleSubsections)
             {
-                foreach (section section in result.Sections)
+                foreach (section rs in result.Sections)
                 {
-                    if (subSection.SectionId==section.Id)
+                    if (uss.SectionId==rs.Id&&!result.Sections.Any(x=>x.Id==)
                     {
-                        section.SubSections.Add(subSection);
+                        rs.SubSections.Add(uss);
                     }
                 }
-            }
+            }*/
 
             foreach (line usefullLine in usefullLines)
             {
@@ -180,16 +185,39 @@ namespace resumeadaptorWPF.StaticClasses
 
             //there are empty sections and empty subsections
             result.Sections.OrderBy(x=> x.Id).ToList();
-            List<section> orderedResult = new List<section>();
-            orderedResult=result.Sections.OrderBy(x=>x.Id).ToList();
+            cv orderedResult = new cv();
+            orderedResult.Sections=orderCvSection(result.Sections);
 
-            return result;
+            return orderedResult;
         }
 
-        internal void printcv(cv pcvtoprint)
+        private ObservableCollection<section> orderCvSection(ObservableCollection<section> sections)
+        {
+            ObservableCollection<section>  result = new ObservableCollection<section>();
+            bool continuesort=true;
+            while (continuesort)
+            {
+                continuesort = false;
+                for (int i = 0; i < sections.Count - 1; i++)
+                {
+                    if (sections[i].Id > sections[i + 1].Id)
+                    {
+                        section tempo = sections[i];
+                        sections[i] = sections[i + 1];
+                        sections[i + 1] = tempo;
+                        continuesort = true;
+                    }
+                }
+            }
+            
+            return sections;
+        }
+
+        internal void printcv(cv pcvtoprint,List<String> pJobWords)
         {
             string directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string file = "cv adapte auto.pdf";
+            myJobWords = pJobWords;
 
             PrintDocument pDoc = new PrintDocument()
             {
@@ -210,30 +238,103 @@ namespace resumeadaptorWPF.StaticClasses
 
         void Print_Page(object sender, PrintPageEventArgs e)
         {
+            string filePath;
+            string fileContent;
+
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = "FORBIDDEN WORDS";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                //Get the path of specified file
+                filePath = openFileDialog.FileName;
+
+                //Read the contents of the file into a stream
+                var fileStream = openFileDialog.OpenFile();
+
+                using (StreamReader reader = new StreamReader(fileStream))
+                {
+                    fileContent = reader.ReadToEnd();
+                }
+            }
+            else
+            {
+                throw (new Exception("cant work without forbidden words. even empty"));
+            }
+
+            string[] forbiddenWordsArray = System.IO.File.ReadAllLines(filePath);
+            List<string> forbiddenWords = forbiddenWordsArray.ToList();
+
+
+
             // Here you can play with the font style 
             // (and much much more, this is just an ultra-basic example)
             Font fnt = new Font("Courier New", 12);
+            Font fntU = new Font("Courier New", 12, FontStyle.Underline);
             Font fntSection = new Font("Courier New", 12, FontStyle.Bold);
+            Font fntSectionU = new Font("Courier New", 12, FontStyle.Bold | FontStyle.Underline);
             Font fntsub = new Font("Courier New", 12, FontStyle.Bold);
+            Font fntsubU = new Font("Courier New", 12, FontStyle.Bold | FontStyle.Underline);
             // Insert the desired text into the PDF file
             string textToPrint = "";
             float lasty = 0;
+            float lastx = 0;
+            //donc l'alog doit être 
+            //in section text identify jobwords
+            //decouper en liste (string, jobValue, deltax)
+            //for each string, font= font switch value, draw with font, increment x
             foreach (section section in cvtoprint.Sections)
             {
-                e.Graphics.DrawString (section.Text, fntSection, System.Drawing.Brushes.Red, 0, lasty);
+                List<underlineText> underlineTexts=  underlinedText(section.Text, myJobWords,forbiddenWords);
+                lastx = 0;
+                foreach (underlineText UText in underlineTexts)
+                {
+                    e.Graphics.DrawString(UText.Text+" ", UText.jobValue?fntSectionU:fntSection, System.Drawing.Brushes.Red, lastx, lasty);
+                    lastx = lastx + UText.deltaX;
+                }
                 lasty = lasty + 20;
                 foreach (subSection sub in section.SubSections)
                 {
-                    e.Graphics.DrawString (sub.Text, fntsub, System.Drawing.Brushes.Black, 0, lasty);
+                    underlineTexts = underlinedText(sub.Text, myJobWords, forbiddenWords);
+                    lastx = 0;
+                    foreach (underlineText UText in underlineTexts)
+                    {
+                        e.Graphics.DrawString(UText.Text + " ", UText.jobValue ? fntsubU : fntsub, System.Drawing.Brushes.Black, lastx, lasty);
+                        lastx = lastx + UText.deltaX;
+                    }
                     lasty = lasty + 20;
+                    
                     foreach (line line in sub.Lines)
                     {
-                        e.Graphics.DrawString (line.Text, fnt, System.Drawing.Brushes.Black, 0, lasty);
+                        underlineTexts = underlinedText(line.Text, myJobWords,forbiddenWords);
+                        lastx = 0;
+                        foreach (underlineText UText in underlineTexts)
+                        {
+                            e.Graphics.DrawString(UText.Text + " ", UText.jobValue ? fntU : fnt, System.Drawing.Brushes.Black, lastx, lasty);
+                            lastx = lastx + UText.deltaX;
+                        }
                         lasty = lasty + 20;
                     }
                 }
             }
             
+        }
+
+        private List<underlineText> underlinedText(string text, List<string> myJobWords, List<string> forbiddenWords)
+        {
+            List<underlineText> result = new List<underlineText>();
+            List<string> words = text.Split(new char[] { ' ' }).ToList();
+            
+            
+
+            foreach (string word in words)
+            {
+                underlineText resultText = new underlineText();
+                resultText.Text = word;
+                resultText.jobValue=myJobWords.Contains(word.ToLower())&&!forbiddenWords.Contains(word.ToLower());
+                resultText.deltaX = word.Length * 12;
+                result.Add(resultText);
+            }
+            return result;
         }
     }
 }

@@ -338,7 +338,7 @@ namespace resumeadaptorWPF
 
             //export to pdf
 
-            trt.printcv(shortcv);
+            trt.printcv(shortcv,jobwords);
         }
     }
 }
