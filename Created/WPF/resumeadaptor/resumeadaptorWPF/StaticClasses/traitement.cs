@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using resumeadaptorWPF.Classes;
 using Microsoft.Win32;
 using System.IO;
+using resumeadaptorWPF.Structs;
 
 namespace resumeadaptorWPF.StaticClasses
 {
@@ -20,6 +21,7 @@ namespace resumeadaptorWPF.StaticClasses
     {
         private cv cvtoprint;
         private List<string> myJobWords;
+        private List<string> forbiddenWords;
         public traitement()
         {
 
@@ -50,7 +52,8 @@ namespace resumeadaptorWPF.StaticClasses
             {
                 foreach (string word in jobwords)
                 {
-                    if (section.Text.Contains(word))
+                    List<String> sectionWords = section.Text.Split(' ').ToList();
+                    if (sectionWords.Any(x => x == word))
                     {
                         result.Add(section);
                         break;
@@ -79,7 +82,8 @@ namespace resumeadaptorWPF.StaticClasses
             {
                 foreach (string word in jobwords)
                 {
-                    if (subsection.Text.Contains(word)&&!result.Any(x=> x.Id==subsection.Id))
+                    List<String> subWords = subsection.Text.Split(' ').ToList();
+                    if (subWords.Any(x => x == word) && !result.Any(x => x.Id == subsection.Id))
                     {
                         result.Add(subsection);
                         break;
@@ -110,7 +114,8 @@ namespace resumeadaptorWPF.StaticClasses
             {
                 foreach (string word in jobwords)
                 {
-                    if (line.Text.Contains(word))
+                    List<String> lineWords = line.Text.Split(' ').ToList();
+                    if (lineWords.Any(x=> x==word))
                     {
                         result.Add(line);
                         break;
@@ -125,70 +130,129 @@ namespace resumeadaptorWPF.StaticClasses
         {
             cv result = new cv();
 
-            //ajout des subsections from lines
-            foreach (section cvsection in myCv.Sections)
+            foreach (line line in usefullLines)
             {
-                foreach (subSection cvsubsection in cvsection.SubSections)
+                //usefullsubsections might have empty subsections or not
+                //i might assume that empty subsections
+                if (!isThisLineInTheseSubsections(line, usefulleSubsections))
                 {
-                    foreach (line line in usefullLines)
-                    {
-                        if (!usefulleSubsections.Any(x=>x.Id==line.SubSectionId)&&line.SubSectionId==cvsubsection.Id )
-                        {
-                            usefulleSubsections.Add(cvsubsection);
-                        }
-                    }
+                    subSection mysub = linesSubsectionWithoutLines(line, myCv);
+                    usefulleSubsections.Add(mysub);
                 }
             }
-            //ajout des sections from subsections
-            foreach (section cvsection in myCv.Sections)
+            foreach (subSection subsection in usefulleSubsections)
             {
-                foreach (subSection cvsubSection in usefulleSubsections)
+                if (!isThisSubInTheseSections(subsection, usefullSections))
                 {
-                    if (!usefullSections.Any(x=>x.Id==cvsubSection.SectionId)&&cvsection.Id==cvsubSection.SectionId)
+                    section section = subsSectionWithoutSubs(subsection, myCv);
+                    usefullSections.Add(section);
+                }
+            }
+
+            if (usefullSections.Count == 0)
+            {
+                throw new Exception("no usefull sections");
+            }
+            //here i have the full list of usefull lines, subsections and sections
+            // build the cv
+            //for each subsection add the lines
+            foreach (subSection sub in usefulleSubsections)
+            {
+                foreach (line line in usefullLines)
+                {
+                    if (line.SubSectionId==sub.Id)
                     {
-                        usefullSections.Add(cvsection);
+                        sub.Lines.Add(line);
                     }
                 }
             }
 
-            foreach (section section in usefullSections)
+            //foreach section add the subsections
+            foreach (section section1 in usefullSections)
             {
-                result.Sections.Add(section);
-            }
-            
-            /*foreach (subSection uss in usefulleSubsections)
-            {
-                foreach (section rs in result.Sections)
+                foreach (subSection subitem in usefulleSubsections)
                 {
-                    if (uss.SectionId==rs.Id&&!result.Sections.Any(x=>x.Id==)
+                    if (subitem.SectionId==section1.Id)
                     {
-                        rs.SubSections.Add(uss);
+                        section1.SubSections.Add(subitem);
                     }
                 }
-            }*/
-
-            foreach (line usefullLine in usefullLines)
-            {
-                foreach (section section in result.Sections)
-                {
-                    foreach (subSection subSection in section.SubSections)
-                    {
-                        if (usefullLine.SubSectionId==subSection.Id)
-                        {
-                            subSection.Lines.Add(usefullLine);
-                        }
-                    }
-                }
+                result.Sections.Add(section1);
             }
-            //there are lines and subsections not added
+            // add section to result.sections
 
 
-            //there are empty sections and empty subsections
-            result.Sections.OrderBy(x=> x.Id).ToList();
+
             cv orderedResult = new cv();
             orderedResult.Sections=orderCvSection(result.Sections);
 
             return orderedResult;
+        }
+
+        private section subsSectionWithoutSubs(subSection subsection, cv myCv)
+        {
+            section result = new section();
+            foreach (section section in myCv.Sections)
+            {
+                if (section.Id==subsection.SectionId)
+                {
+                    result.Id = section.Id;
+                    result.Text = section.Text;
+                    result.Order = section.Order;
+                    break;
+                }
+            }
+
+            return result;
+        }
+
+        private bool isThisSubInTheseSections(subSection subsection, List<section> usefullSections)
+        {
+            bool found =false;
+
+            foreach (section section in usefullSections)
+            {
+                if (subsection.SectionId==section.Id)
+                {
+                    found = true;
+                    break;
+                }
+            }
+            return found;
+        }
+
+        private subSection linesSubsectionWithoutLines(line line, cv myCv)
+        {
+            subSection subsection = new subSection();
+            foreach (section sec in myCv.Sections)
+            {
+                foreach (subSection sub in sec.SubSections)
+                {
+                    if (line.SubSectionId==sub.Id)
+                    {
+                        subsection.Id=sub.Id;
+                        subsection.Text=sub.Text;
+                        subsection.Order=sub.Order;
+                        subsection.SectionId=sub.SectionId;
+                        break;
+                    }
+                }
+            }
+            return subsection;
+        }
+
+        private bool isThisLineInTheseSubsections(line line, List<subSection> usefulleSubsections)
+        {
+            bool found = false;
+
+            foreach (subSection subs in usefulleSubsections)
+            {
+                if (line.SubSectionId==subs.Id)
+                {
+                    found = true;
+                }
+            }
+            return found;
         }
 
         private ObservableCollection<section> orderCvSection(ObservableCollection<section> sections)
@@ -213,12 +277,12 @@ namespace resumeadaptorWPF.StaticClasses
             return sections;
         }
 
-        internal void printcv(cv pcvtoprint,List<String> pJobWords)
+        internal void printcv(cv pcvtoprint,List<String> pJobWords, List<String> pforbiddenWords)
         {
             string directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string file = "cv adapte auto.pdf";
             myJobWords = pJobWords;
-
+            forbiddenWords = pforbiddenWords;
             PrintDocument pDoc = new PrintDocument()
             {
                 PrinterSettings = new PrinterSettings()
@@ -238,34 +302,7 @@ namespace resumeadaptorWPF.StaticClasses
 
         void Print_Page(object sender, PrintPageEventArgs e)
         {
-            string filePath;
-            string fileContent;
-
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Title = "FORBIDDEN WORDS";
-            if (openFileDialog.ShowDialog() == true)
-            {
-                //Get the path of specified file
-                filePath = openFileDialog.FileName;
-
-                //Read the contents of the file into a stream
-                var fileStream = openFileDialog.OpenFile();
-
-                using (StreamReader reader = new StreamReader(fileStream))
-                {
-                    fileContent = reader.ReadToEnd();
-                }
-            }
-            else
-            {
-                throw (new Exception("cant work without forbidden words. even empty"));
-            }
-
-            string[] forbiddenWordsArray = System.IO.File.ReadAllLines(filePath);
-            List<string> forbiddenWords = forbiddenWordsArray.ToList();
-
-
-
+           
             // Here you can play with the font style 
             // (and much much more, this is just an ultra-basic example)
             Font fnt = new Font("Courier New", 12);
@@ -335,6 +372,50 @@ namespace resumeadaptorWPF.StaticClasses
                 result.Add(resultText);
             }
             return result;
+        }
+
+        internal void createReport(cv shortcv, List<string> jobwords, List<string> forbiddenWords, List<string> uniqueJobWords)
+        {
+            List<reportItem> reportItems = new List<reportItem>();
+            foreach (string joboword in uniqueJobWords)
+            {
+                int countWordOffer = jobwords.Count(x=>x==joboword.ToLower());
+                int countWordCV = 0;
+                foreach (section sec in shortcv.Sections)
+                {
+                    countWordCV += sec.Text.ToLower().Split(' ').Count(x=> x==joboword.ToLower());
+                    foreach (subSection sub in sec.SubSections)
+                    {
+                        countWordCV += sub.Text.ToLower().Split(' ').Count(x => x == joboword.ToLower());
+                        foreach (line line in sub.Lines)
+                        {
+                            countWordCV += line.Text.ToLower().Split(' ').Count(x => x == joboword.ToLower());
+                        }
+                    }
+                }
+                //count
+
+                reportItems.Add(new reportItem(joboword.ToLower(), countWordOffer,countWordCV));
+            }
+
+            savereport(reportItems);
+        }
+
+        private void savereport(List<reportItem> reportItems)
+        {
+            //here
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string file = "short cv report.csv";
+            string mystring="word;offerCount;CVcount;\n";
+            foreach (reportItem item in reportItems)
+            {
+                mystring = mystring + item.word + ";" + item.offerCount + ";" + item.CVcount + ";\n";
+            }
+            File.WriteAllTextAsync(System.IO.Path.Combine(directory, file), mystring);
+            
+            ProcessStartInfo startInfo = new ProcessStartInfo(System.IO.Path.Combine(directory, file));
+            startInfo.UseShellExecute = true;
+            Process.Start(startInfo);
         }
     }
 }

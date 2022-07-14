@@ -299,6 +299,35 @@ namespace resumeadaptorWPF
                 return;
             }
 
+            #region build forbidden words
+            string filePath2;
+            string fileContent2;
+
+            OpenFileDialog openFileDialog2 = new OpenFileDialog();
+            openFileDialog2.Title = "FORBIDDEN WORDS";
+            if (openFileDialog2.ShowDialog() == true)
+            {
+                //Get the path of specified file
+                filePath2 = openFileDialog2.FileName;
+
+                //Read the contents of the file into a stream
+                var fileStream2 = openFileDialog2.OpenFile();
+
+                using (StreamReader reader = new StreamReader(fileStream2))
+                {
+                    fileContent2 = reader.ReadToEnd();
+                }
+            }
+            else
+            {
+                throw (new Exception("cant work without forbidden words. even empty"));
+            }
+
+            string[] forbiddenWordsArray = System.IO.File.ReadAllLines(filePath2);
+            List<string> forbiddenWords = forbiddenWordsArray.ToList();
+            #endregion
+
+
             string[] joblines = System.IO.File.ReadAllLines(filePath);
             List<string> jobwords = new List<string>();
             foreach (string jobline in joblines)
@@ -315,7 +344,7 @@ namespace resumeadaptorWPF
                     {
                         if (!string.IsNullOrEmpty(word) && word.Length > 2)
                         {
-                            if (!jobwords.Contains(word))
+                            if (!forbiddenWords.Contains(word.ToLower()))//!jobwords.Contains(word)&&
                             {
                                 jobwords.Add(word.ToLower());
                             }
@@ -326,6 +355,11 @@ namespace resumeadaptorWPF
             string v_dbg = "bdg";
             jobwords.Sort();
             traitement trt = new traitement();
+            List<string> jobredundantWords = new List<string>();
+            foreach (string word in jobwords)
+            {
+                jobredundantWords.Add(new string(word));
+            }
             jobwords=trt.uniquejobwords(jobwords);
 
             List<section> usefullSections = trt.usefullSections(jobwords, App.myCv);
@@ -337,8 +371,9 @@ namespace resumeadaptorWPF
             cv shortcv = trt.buildcv(usefullSections, usefulleSubsections, usefullLines, App.myCv);
 
             //export to pdf
+            trt.createReport(shortcv, jobredundantWords, forbiddenWords,jobwords);
 
-            trt.printcv(shortcv,jobwords);
+            trt.printcv(shortcv,jobwords, forbiddenWords);
         }
     }
 }
