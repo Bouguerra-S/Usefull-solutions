@@ -305,12 +305,12 @@ namespace resumeadaptorWPF.StaticClasses
            
             // Here you can play with the font style 
             // (and much much more, this is just an ultra-basic example)
-            Font fnt = new Font("Courier New", 12);
-            Font fntU = new Font("Courier New", 12, FontStyle.Underline);
-            Font fntSection = new Font("Courier New", 12, FontStyle.Bold);
-            Font fntSectionU = new Font("Courier New", 12, FontStyle.Bold | FontStyle.Underline);
-            Font fntsub = new Font("Courier New", 12, FontStyle.Bold);
-            Font fntsubU = new Font("Courier New", 12, FontStyle.Bold | FontStyle.Underline);
+            Font fnt = new Font("Courier New", 11);
+            Font fntU = new Font("Courier New", 11, FontStyle.Underline);
+            Font fntSection = new Font("Courier New", 15, FontStyle.Bold);
+            Font fntSectionU = new Font("Courier New", 15, FontStyle.Bold | FontStyle.Underline);
+            Font fntsub = new Font("Courier New", 13, FontStyle.Bold);
+            Font fntsubU = new Font("Courier New", 13, FontStyle.Bold | FontStyle.Underline);
             // Insert the desired text into the PDF file
             string textToPrint = "";
             float lasty = 0;
@@ -326,9 +326,9 @@ namespace resumeadaptorWPF.StaticClasses
                 foreach (underlineText UText in underlineTexts)
                 {
                     e.Graphics.DrawString(UText.Text+" ", UText.jobValue?fntSectionU:fntSection, System.Drawing.Brushes.Red, lastx, lasty);
-                    lastx = lastx + UText.deltaX;
+                    lastx = lastx + UText.deltaX*1.25f;
                 }
-                lasty = lasty + 20;
+                lasty = lasty + 30;
                 foreach (subSection sub in section.SubSections)
                 {
                     underlineTexts = underlinedText(sub.Text, myJobWords, forbiddenWords);
@@ -336,9 +336,9 @@ namespace resumeadaptorWPF.StaticClasses
                     foreach (underlineText UText in underlineTexts)
                     {
                         e.Graphics.DrawString(UText.Text + " ", UText.jobValue ? fntsubU : fntsub, System.Drawing.Brushes.Black, lastx, lasty);
-                        lastx = lastx + UText.deltaX;
+                        lastx = lastx + UText.deltaX*1.12f;
                     }
-                    lasty = lasty + 20;
+                    lasty = lasty + 25;
                     
                     foreach (line line in sub.Lines)
                     {
@@ -347,7 +347,7 @@ namespace resumeadaptorWPF.StaticClasses
                         foreach (underlineText UText in underlineTexts)
                         {
                             e.Graphics.DrawString(UText.Text + " ", UText.jobValue ? fntU : fnt, System.Drawing.Brushes.Black, lastx, lasty);
-                            lastx = lastx + UText.deltaX;
+                            lastx = lastx + UText.deltaX*0.9f;
                         }
                         lasty = lasty + 20;
                     }
