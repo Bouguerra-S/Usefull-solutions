@@ -19,6 +19,8 @@ namespace resumeadaptorWPF.Models
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+
+        #region memebers and properties
         private int id;
 
         public int Id
@@ -50,8 +52,9 @@ namespace resumeadaptorWPF.Models
             get { return subSectionId; }
             set { subSectionId = value; OnPropertyChanged("SubSectionId"); }
         }
+        #endregion
 
-
+        #region constructors
         public line()
         {
 
@@ -63,9 +66,14 @@ namespace resumeadaptorWPF.Models
             Text = t;
             subSectionId = ssi;
         }
+        #endregion
+
+        #region overrides
         public override string ToString()
         {
             return Text;
         }
+        #endregion
+
     }
 }
