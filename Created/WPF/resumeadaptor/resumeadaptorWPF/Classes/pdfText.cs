@@ -9,11 +9,45 @@ namespace resumeadaptorWPF.Classes
 {
     public class pdfText
     {
-        public string text;
-        public Font fnt;
-        public Brush brsh;
-        public float x;
-        public float y;
+        private string Text;
+        private Font Fnt;
+        public Brush Brsh;
+        public float X;
+        public float Y;
+
+        public string text
+        {
+            get { return Text; }
+            set { Text = value; }
+        }
+
+        public Font fnt
+        {
+            get { return Fnt; }
+            set { Fnt = value; }
+        }
+
+
+        public float x
+        {
+            get { return X; }
+            set { X = value; }
+        }
+
+
+        public Brush brsh
+        {
+            get { return Brsh; }
+            set { Brsh = value; }
+        }
+
+
+        public float y
+        {
+            get { return Y; }
+            set { Y = value; }
+        }
+
         public pdfText()
         {
 

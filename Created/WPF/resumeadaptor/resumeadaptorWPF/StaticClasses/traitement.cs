@@ -52,7 +52,7 @@ namespace resumeadaptorWPF.StaticClasses
             {
                 foreach (string word in jobwords)
                 {
-                    List<String> sectionWords = section.Text.Split(' ').ToList();
+                    List<String> sectionWords = section.Text.ToLower().Split(' ').ToList();
                     if (sectionWords.Any(x => x == word))
                     {
                         result.Add(section);
@@ -82,7 +82,7 @@ namespace resumeadaptorWPF.StaticClasses
             {
                 foreach (string word in jobwords)
                 {
-                    List<String> subWords = subsection.Text.Split(' ').ToList();
+                    List<String> subWords = subsection.Text.ToLower().Split(' ').ToList();
                     if (subWords.Any(x => x == word) && !result.Any(x => x.Id == subsection.Id))
                     {
                         result.Add(subsection);
@@ -114,7 +114,7 @@ namespace resumeadaptorWPF.StaticClasses
             {
                 foreach (string word in jobwords)
                 {
-                    List<String> lineWords = line.Text.Split(' ').ToList();
+                    List<String> lineWords = line.Text.ToLower().Split(' ').ToList();
                     if (lineWords.Any(x=> x==word))
                     {
                         result.Add(line);
@@ -172,13 +172,17 @@ namespace resumeadaptorWPF.StaticClasses
             {
                 foreach (subSection subitem in usefulleSubsections)
                 {
-                    if (subitem.SectionId==section1.Id)
+                    if (subitem.SectionId==section1.Id&&subitem.Lines.Count()>0)
                     {
                         section1.SubSections.Add(subitem);
                     }
                 }
-                result.Sections.Add(section1);
+                if (section1.SubSections.Count()>0)
+                {
+                    result.Sections.Add(section1);
+                }
             }
+
             // add section to result.sections
 
 
