@@ -285,6 +285,20 @@ namespace resumeadaptorWPF.StaticClasses
         {
             string directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string file = "cv adapte auto.pdf";
+            string personalChemin;//here
+            SaveFileDialog openFileDialog2 = new SaveFileDialog();
+            openFileDialog2.Title = "save short cv";
+            if (openFileDialog2.ShowDialog() == true)
+            {
+                //Get the path of specified file
+                personalChemin = openFileDialog2.FileName;
+            }
+            else
+            {
+                throw (new Exception("cant work without short cv location"));
+            }
+
+
             myJobWords = pJobWords;
             forbiddenWords = pforbiddenWords;
             PrintDocument pDoc = new PrintDocument()
@@ -293,13 +307,13 @@ namespace resumeadaptorWPF.StaticClasses
                 {
                     PrinterName = "Microsoft Print to PDF",
                     PrintToFile = true,
-                    PrintFileName = System.IO.Path.Combine(directory, file),
+                    PrintFileName = personalChemin,
                 }
             };
             cvtoprint = pcvtoprint;
             pDoc.PrintPage += new PrintPageEventHandler(Print_Page);
             pDoc.Print();
-            ProcessStartInfo startInfo = new ProcessStartInfo(System.IO.Path.Combine(directory, file));
+            ProcessStartInfo startInfo = new ProcessStartInfo(personalChemin);
             startInfo.UseShellExecute = true;
             Process.Start(startInfo);
         }

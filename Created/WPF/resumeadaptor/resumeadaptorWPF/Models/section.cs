@@ -20,6 +20,8 @@ namespace resumeadaptorWPF.Models
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+
+        #region  attributes and properties
         private int id;
 
         public int Id
@@ -43,18 +45,6 @@ namespace resumeadaptorWPF.Models
             get { return text; }
             set { text = value; OnPropertyChanged("Text"); }
         }
-
-        public section()
-        {
-            SubSections = new ObservableCollection<subSection>();
-        }
-        public section(int i,int o,string t)
-        {
-            Id = i;
-            Order = o;
-            Text = t;
-            SubSections = new ObservableCollection<subSection>();
-        }
         private ObservableCollection<subSection> subSections;
 
         public ObservableCollection<subSection> SubSections
@@ -62,13 +52,29 @@ namespace resumeadaptorWPF.Models
             get { return subSections; }
             set { subSections = value; OnPropertyChanged("SubSections"); }
         }
+        #endregion
 
+        #region constructors
+        public section()
+        {
+            SubSections = new ObservableCollection<subSection>();
+        }
+        public section(int i, int o, string t)
+        {
+            Id = i;
+            Order = o;
+            Text = t;
+            SubSections = new ObservableCollection<subSection>();
+        }
+        #endregion
+
+        #region overrides
         public override string ToString()
         {
             string result = "\n-------------------------------------------------\n";
-            result += "Section " + Id.ToString()+ " : ";
+            result += "Section " + Id.ToString() + " : ";
             result += Text;
-            if (SubSections is not null)
+            if (SubSections.Any())
             {
                 foreach (subSection ssitem in SubSections)
                 {
@@ -80,12 +86,15 @@ namespace resumeadaptorWPF.Models
                             result += "\n" + litem.Text;
                         }
                     }
-                    
+
                 }
             }
-            
+
             return result;
         }
+        #endregion
+
+
 
     }
 }
