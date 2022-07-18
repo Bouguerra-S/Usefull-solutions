@@ -19,14 +19,19 @@ namespace resumeadaptorWPF.StaticClasses
 {
     public class traitement
     {
+        #region attributes
         private cv cvtoprint;
+
         private List<string> myJobWords;
         private List<string> forbiddenWords;
+        #endregion
+        #region constructor
         public traitement()
         {
 
         }
-
+        #endregion
+        #region Methods
         internal List<string> uniquejobwords(List<string> jobwords)
         {
             List<string> result = new List<string>();
@@ -59,7 +64,7 @@ namespace resumeadaptorWPF.StaticClasses
                         break;
                     }
                 }
-                
+
             }
             return result;
         }
@@ -74,7 +79,7 @@ namespace resumeadaptorWPF.StaticClasses
                 foreach (subSection subs in section.SubSections)
                 {
 
-                    tempo.Add(new subSection(subs.Id,subs.Order,subs.Text,subs.SectionId));
+                    tempo.Add(new subSection(subs.Id, subs.Order, subs.Text, subs.SectionId));
                 }
             };
 
@@ -115,7 +120,7 @@ namespace resumeadaptorWPF.StaticClasses
                 foreach (string word in jobwords)
                 {
                     List<String> lineWords = line.Text.ToLower().Split(' ').ToList();
-                    if (lineWords.Any(x=> x==word))
+                    if (lineWords.Any(x => x == word))
                     {
                         result.Add(line);
                         break;
@@ -160,7 +165,7 @@ namespace resumeadaptorWPF.StaticClasses
             {
                 foreach (line line in usefullLines)
                 {
-                    if (line.SubSectionId==sub.Id)
+                    if (line.SubSectionId == sub.Id)
                     {
                         sub.Lines.Add(line);
                     }
@@ -172,12 +177,12 @@ namespace resumeadaptorWPF.StaticClasses
             {
                 foreach (subSection subitem in usefulleSubsections)
                 {
-                    if (subitem.SectionId==section1.Id&&subitem.Lines.Count()>0)
+                    if (subitem.SectionId == section1.Id && subitem.Lines.Count() > 0)
                     {
                         section1.SubSections.Add(subitem);
                     }
                 }
-                if (section1.SubSections.Count()>0)
+                if (section1.SubSections.Count() > 0)
                 {
                     result.Sections.Add(section1);
                 }
@@ -188,7 +193,7 @@ namespace resumeadaptorWPF.StaticClasses
 
 
             cv orderedResult = new cv();
-            orderedResult.Sections=orderCvSection(result.Sections);
+            orderedResult.Sections = orderCvSection(result.Sections);
 
             return orderedResult;
         }
@@ -198,7 +203,7 @@ namespace resumeadaptorWPF.StaticClasses
             section result = new section();
             foreach (section section in myCv.Sections)
             {
-                if (section.Id==subsection.SectionId)
+                if (section.Id == subsection.SectionId)
                 {
                     result.Id = section.Id;
                     result.Text = section.Text;
@@ -212,11 +217,11 @@ namespace resumeadaptorWPF.StaticClasses
 
         private bool isThisSubInTheseSections(subSection subsection, List<section> usefullSections)
         {
-            bool found =false;
+            bool found = false;
 
             foreach (section section in usefullSections)
             {
-                if (subsection.SectionId==section.Id)
+                if (subsection.SectionId == section.Id)
                 {
                     found = true;
                     break;
@@ -232,12 +237,12 @@ namespace resumeadaptorWPF.StaticClasses
             {
                 foreach (subSection sub in sec.SubSections)
                 {
-                    if (line.SubSectionId==sub.Id)
+                    if (line.SubSectionId == sub.Id)
                     {
-                        subsection.Id=sub.Id;
-                        subsection.Text=sub.Text;
-                        subsection.Order=sub.Order;
-                        subsection.SectionId=sub.SectionId;
+                        subsection.Id = sub.Id;
+                        subsection.Text = sub.Text;
+                        subsection.Order = sub.Order;
+                        subsection.SectionId = sub.SectionId;
                         break;
                     }
                 }
@@ -251,7 +256,7 @@ namespace resumeadaptorWPF.StaticClasses
 
             foreach (subSection subs in usefulleSubsections)
             {
-                if (line.SubSectionId==subs.Id)
+                if (line.SubSectionId == subs.Id)
                 {
                     found = true;
                 }
@@ -261,8 +266,8 @@ namespace resumeadaptorWPF.StaticClasses
 
         private ObservableCollection<section> orderCvSection(ObservableCollection<section> sections)
         {
-            ObservableCollection<section>  result = new ObservableCollection<section>();
-            bool continuesort=true;
+            ObservableCollection<section> result = new ObservableCollection<section>();
+            bool continuesort = true;
             while (continuesort)
             {
                 continuesort = false;
@@ -277,11 +282,11 @@ namespace resumeadaptorWPF.StaticClasses
                     }
                 }
             }
-            
+
             return sections;
         }
 
-        internal void printcv(cv pcvtoprint,List<String> pJobWords, List<String> pforbiddenWords)
+        internal void printcv(cv pcvtoprint, List<String> pJobWords, List<String> pforbiddenWords)
         {
             string directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string file = "cv adapte auto.pdf";
@@ -320,7 +325,7 @@ namespace resumeadaptorWPF.StaticClasses
 
         void Print_Page(object sender, PrintPageEventArgs e)
         {
-           
+
             // Here you can play with the font style 
             // (and much much more, this is just an ultra-basic example)
             Font fnt = new Font("Courier New", 9);
@@ -340,12 +345,12 @@ namespace resumeadaptorWPF.StaticClasses
             foreach (section section in cvtoprint.Sections)
             {
                 int sectionColumn = calculateSectionColumn(section, 300);
-                List<underlineText> underlineTexts=  underlinedText(section.Text, myJobWords,forbiddenWords);
-                lastx = 300* sectionColumn;
+                List<underlineText> underlineTexts = underlinedText(section.Text, myJobWords, forbiddenWords);
+                lastx = 300 * sectionColumn;
                 foreach (underlineText UText in underlineTexts)
                 {
-                    e.Graphics.DrawString(UText.Text+" ", UText.jobValue?fntSectionU:fntSection, System.Drawing.Brushes.Red, lastx, lasty);
-                    lastx = lastx + UText.deltaX* 0.9f;
+                    e.Graphics.DrawString(UText.Text + " ", UText.jobValue ? fntSectionU : fntSection, System.Drawing.Brushes.Red, lastx, lasty);
+                    lastx = lastx + UText.deltaX * 0.9f;
                 }
                 lasty = lasty + 30;
                 foreach (subSection sub in section.SubSections)
@@ -355,46 +360,46 @@ namespace resumeadaptorWPF.StaticClasses
                     foreach (underlineText UText in underlineTexts)
                     {
                         e.Graphics.DrawString(UText.Text + " ", UText.jobValue ? fntsubU : fntsub, System.Drawing.Brushes.Black, lastx, lasty);
-                        lastx = lastx + UText.deltaX* 0.85f;
+                        lastx = lastx + UText.deltaX * 0.85f;
                     }
                     lasty = lasty + 25;
-                    
+
                     foreach (line line in sub.Lines)
                     {
-                        underlineTexts = underlinedText(line.Text, myJobWords,forbiddenWords);
+                        underlineTexts = underlinedText(line.Text, myJobWords, forbiddenWords);
                         lastx = 300 * sectionColumn; ;
                         foreach (underlineText UText in underlineTexts)
                         {
                             e.Graphics.DrawString(UText.Text + " ", UText.jobValue ? fntU : fnt, System.Drawing.Brushes.Black, lastx, lasty);
-                            lastx = lastx + UText.deltaX*0.7f;
+                            lastx = lastx + UText.deltaX * 0.7f;
                         }
                         lasty = lasty + 20;
                     }
                 }
             }
-            
+
         }
 
         private int calculateSectionColumn(section section, int column1WidthMm)//300
         {
             int result = 0;
-            if (section.Text.Length*9>=column1WidthMm)
+            if (section.Text.Length * 9 >= column1WidthMm)
             {
                 result = 1;
                 return result;
             }
             foreach (subSection sub in section.SubSections)
             {
-                if (sub.Text.Length*7>=column1WidthMm)
+                if (sub.Text.Length * 7 >= column1WidthMm)
                 {
                     result = 1;
                     return result;
                 }
                 foreach (line line in sub.Lines)
                 {
-                    if (line.Text.Length*7>=column1WidthMm)
+                    if (line.Text.Length * 7 >= column1WidthMm)
                     {
-                        result=1;
+                        result = 1;
                         return 1;
                     }
                 }
@@ -407,14 +412,14 @@ namespace resumeadaptorWPF.StaticClasses
         {
             List<underlineText> result = new List<underlineText>();
             List<string> words = text.Split(new char[] { ' ' }).ToList();
-            
-            
+
+
 
             foreach (string word in words)
             {
                 underlineText resultText = new underlineText();
                 resultText.Text = word;
-                resultText.jobValue=myJobWords.Contains(word.ToLower())&&!forbiddenWords.Contains(word.ToLower());
+                resultText.jobValue = myJobWords.Contains(word.ToLower()) && !forbiddenWords.Contains(word.ToLower());
                 resultText.deltaX = word.Length * 12;
                 result.Add(resultText);
             }
@@ -426,11 +431,11 @@ namespace resumeadaptorWPF.StaticClasses
             List<reportItem> reportItems = new List<reportItem>();
             foreach (string joboword in uniqueJobWords)
             {
-                int countWordOffer = jobwords.Count(x=>x==joboword.ToLower());
+                int countWordOffer = jobwords.Count(x => x == joboword.ToLower());
                 int countWordCV = 0;
                 foreach (section sec in shortcv.Sections)
                 {
-                    countWordCV += sec.Text.ToLower().Split(' ').Count(x=> x==joboword.ToLower());
+                    countWordCV += sec.Text.ToLower().Split(' ').Count(x => x == joboword.ToLower());
                     foreach (subSection sub in sec.SubSections)
                     {
                         countWordCV += sub.Text.ToLower().Split(' ').Count(x => x == joboword.ToLower());
@@ -442,7 +447,7 @@ namespace resumeadaptorWPF.StaticClasses
                 }
                 //count
 
-                reportItems.Add(new reportItem(joboword.ToLower(), countWordOffer,countWordCV));
+                reportItems.Add(new reportItem(joboword.ToLower(), countWordOffer, countWordCV));
             }
 
             savereport(reportItems);
@@ -453,16 +458,19 @@ namespace resumeadaptorWPF.StaticClasses
             //here
             string directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string file = "short cv report.csv";
-            string mystring="word;offerCount;CVcount;\n";
+            string mystring = "word;offerCount;CVcount;\n";
             foreach (reportItem item in reportItems)
             {
                 mystring = mystring + item.word + ";" + item.offerCount + ";" + item.CVcount + ";\n";
             }
             File.WriteAllTextAsync(System.IO.Path.Combine(directory, file), mystring);
-            
+
             ProcessStartInfo startInfo = new ProcessStartInfo(System.IO.Path.Combine(directory, file));
             startInfo.UseShellExecute = true;
             Process.Start(startInfo);
         }
+        #endregion
+
+
     }
 }
