@@ -20,6 +20,7 @@ namespace resumeadaptorWPF.Models
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+        #region properties and attributes
         private int id;
 
         public int Id
@@ -51,12 +52,25 @@ namespace resumeadaptorWPF.Models
             get { return sectionId; }
             set { sectionId = value; OnPropertyChanged("SectionId"); }
         }
+        private ObservableCollection<line> lines;
 
-
+        public ObservableCollection<line> Lines
+        {
+            get { return lines; }
+            set { lines = value; OnPropertyChanged("Lines"); }
+        }
+        #endregion
+        #region constructos
         public subSection()
         {
             Lines = new ObservableCollection<line>();
-        }
+        }/// <summary>
+        ///  creates a subsection with full data
+        /// </summary>
+        /// <param name="i">Id</param>
+        /// <param name="o">Order</param>
+        /// <param name="t">Text</param>
+        /// <param name="si">section Id</param>
         public subSection(int i, int o, string t, int si)
         {
             Id = i;
@@ -65,18 +79,13 @@ namespace resumeadaptorWPF.Models
             SectionId = si;
             Lines = new ObservableCollection<line>();
         }
-
-        private ObservableCollection<line> lines;
-
-        public ObservableCollection<line> Lines
-        {
-            get { return lines; }
-            set { lines = value; OnPropertyChanged("Lines"); }
-        }
+        #endregion
+        #region overrides
         public override string ToString()
         {
             return Text;
         }
+        #endregion
 
     }
 }

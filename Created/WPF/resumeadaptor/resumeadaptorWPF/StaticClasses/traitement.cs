@@ -339,8 +339,9 @@ namespace resumeadaptorWPF.StaticClasses
             //for each string, font= font switch value, draw with font, increment x
             foreach (section section in cvtoprint.Sections)
             {
+                int sectionColumn = calculateSectionColumn(section, 300);
                 List<underlineText> underlineTexts=  underlinedText(section.Text, myJobWords,forbiddenWords);
-                lastx = 0;
+                lastx = 300* sectionColumn;
                 foreach (underlineText UText in underlineTexts)
                 {
                     e.Graphics.DrawString(UText.Text+" ", UText.jobValue?fntSectionU:fntSection, System.Drawing.Brushes.Red, lastx, lasty);
@@ -350,7 +351,7 @@ namespace resumeadaptorWPF.StaticClasses
                 foreach (subSection sub in section.SubSections)
                 {
                     underlineTexts = underlinedText(sub.Text, myJobWords, forbiddenWords);
-                    lastx = 0;
+                    lastx = 300 * sectionColumn; ;
                     foreach (underlineText UText in underlineTexts)
                     {
                         e.Graphics.DrawString(UText.Text + " ", UText.jobValue ? fntsubU : fntsub, System.Drawing.Brushes.Black, lastx, lasty);
@@ -361,7 +362,7 @@ namespace resumeadaptorWPF.StaticClasses
                     foreach (line line in sub.Lines)
                     {
                         underlineTexts = underlinedText(line.Text, myJobWords,forbiddenWords);
-                        lastx = 0;
+                        lastx = 300 * sectionColumn; ;
                         foreach (underlineText UText in underlineTexts)
                         {
                             e.Graphics.DrawString(UText.Text + " ", UText.jobValue ? fntU : fnt, System.Drawing.Brushes.Black, lastx, lasty);
@@ -372,6 +373,34 @@ namespace resumeadaptorWPF.StaticClasses
                 }
             }
             
+        }
+
+        private int calculateSectionColumn(section section, int column1WidthMm)
+        {
+            int result = 0;
+            if (section.Text.Length*2>=column1WidthMm)
+            {
+                result = 1;
+                return result;
+            }
+            foreach (subSection sub in section.SubSections)
+            {
+                if (sub.Text.Length*1.5>=column1WidthMm)
+                {
+                    result = 1;
+                    return result;
+                }
+                foreach (line line in sub.Lines)
+                {
+                    if (line.Text.Length>=column1WidthMm)
+                    {
+                        result=1;
+                        return 1;
+                    }
+                }
+            }
+
+            return result;
         }
 
         private List<underlineText> underlinedText(string text, List<string> myJobWords, List<string> forbiddenWords)
