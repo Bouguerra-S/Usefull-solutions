@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="planning.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="categoriesFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\Users\sbouguerra\Desktop\personnel\apps data\personal planner\1 categories.txt</Value>
+    </Setting>
+    <Setting Name="OneFree" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\Users\sbouguerra\Desktop\personnel\apps data\personal planner\4 one time free events.txt</Value>
+    </Setting>
+    <Setting Name="RecFree" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\Users\sbouguerra\Desktop\personnel\apps data\personal planner\5 recurrent free events.txt</Value>
+    </Setting>
+    <Setting Name="OneFixed" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\Users\sbouguerra\Desktop\personnel\apps data\personal planner\2 one time fixed events.txt</Value>
+    </Setting>
+    <Setting Name="RecFixed" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\Users\sbouguerra\Desktop\personnel\apps data\personal planner\3 recurrent fixed events.txt</Value>
+    </Setting>
+    <Setting Name="outputpdf" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\sbouguerra\Desktop\personnel\apps data\personal planner\plan.pdf</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
