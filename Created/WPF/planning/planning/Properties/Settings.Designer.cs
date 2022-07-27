@@ -23,7 +23,7 @@ namespace planning.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\sbouguerra\\Desktop\\personnel\\apps data\\personal planner\\1 categories.txt" +
             "")]
@@ -31,9 +31,12 @@ namespace planning.Properties {
             get {
                 return ((string)(this["categoriesFile"]));
             }
+            set {
+                this["categoriesFile"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\sbouguerra\\Desktop\\personnel\\apps data\\personal planner\\4 one time free " +
             "events.txt")]
@@ -41,9 +44,12 @@ namespace planning.Properties {
             get {
                 return ((string)(this["OneFree"]));
             }
+            set {
+                this["OneFree"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\sbouguerra\\Desktop\\personnel\\apps data\\personal planner\\5 recurrent free" +
             " events.txt")]
@@ -51,9 +57,12 @@ namespace planning.Properties {
             get {
                 return ((string)(this["RecFree"]));
             }
+            set {
+                this["RecFree"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\sbouguerra\\Desktop\\personnel\\apps data\\personal planner\\2 one time fixed" +
             " events.txt")]
@@ -61,15 +70,21 @@ namespace planning.Properties {
             get {
                 return ((string)(this["OneFixed"]));
             }
+            set {
+                this["OneFixed"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\sbouguerra\\Desktop\\personnel\\apps data\\personal planner\\3 recurrent fixe" +
             "d events.txt")]
         public string RecFixed {
             get {
                 return ((string)(this["RecFixed"]));
+            }
+            set {
+                this["RecFixed"] = value;
             }
         }
         

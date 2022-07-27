@@ -1,8 +1,5 @@
-﻿using Microsoft.Win32;
-using planning.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,16 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using planning.Properties;
 
-namespace planning
+namespace planning.Pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for categoriesView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class categoriesView : Page
     {
-        public MainWindow()
+        public categoriesView()
         {
             InitializeComponent();
         }

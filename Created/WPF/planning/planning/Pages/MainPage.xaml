@@ -1,0 +1,47 @@
+﻿<Page x:Class="planning.Pages.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:planning.Pages"
+      mc:Ignorable="d"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MainPage">
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <CheckBox Content="option1"></CheckBox>
+            <CheckBox Content="option2"></CheckBox>
+            <CheckBox Content="option3"></CheckBox>
+            <CheckBox Content="option4"></CheckBox>
+            <CheckBox Content="option5"></CheckBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Vertical">
+                <Button Click="Button_Click">calculate</Button>
+                <Label Name="categoriesTextBox" Background="Green" Opacity="30"/>
+                <Label Name="onetimeFixedEventsTB" Background="Green" Opacity="30"/>
+                <Label Name="recurrentFixedEventsTB" Background="Green" Opacity="30"/>
+                <Label Name="oneTimeFreeEventsTB" Background="Green" Opacity="30"/>
+                <Label Name="RecurrentFreeEventsTB" Background="Green" Opacity="30"/>
+                <Label Name="outputTB" Grid.Column="2" Background="Green" Opacity="30"/>
+            </StackPanel>
+            <StackPanel>
+                <Button Click="Button_Click_Config_File">Categories</Button>
+                <Button>One Fixed</Button>
+                <Button>Recurrent Fixed</Button>
+                <Button>One Free</Button>
+                <Button>Recurrent free</Button>
+                <Button>pdf</Button>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel>
+            <Button>View Categories</Button>
+            <Button>View One Fixed</Button>
+            <Button>View Recurrent Fixed</Button>
+            <Button>View One Free</Button>
+            <Button>View Recurrent free</Button>
+            <Button>View pdf</Button>
+            <Button>Planning rules</Button>
+        </StackPanel>
+    </StackPanel>
+</Page>
